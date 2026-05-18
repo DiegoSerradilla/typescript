@@ -1,6 +1,8 @@
+import { Asignatura } from "./asignatura";
+
 export interface MatriculaActiva {
-  tipo: "ACTIVA";
-  asignaturas: string[];
+tipo: "ACTIVA";
+asignaturas: Asignatura[];
 }
 
 export interface MatriculaSuspendida {
@@ -30,13 +32,27 @@ export type EstadoMatricula =
       return `Matrícula finalizada con nota media ${estado.notaMedia}`;
 
     default:
-      return "Estado desconocido";
+    const comprobacionExhaustiva: never = estado;
+     throw new Error(`Estado no manejado`);
   }
 }
 
 const matriculaPrueba: EstadoMatricula = {
   tipo: "ACTIVA",
-  asignaturas: ["Programación", "Bases de Datos"]
+  asignaturas: [
+    {
+      id: "ASIG-01",
+      nombre: "Programación",
+      creditos: 6,
+      profesor: "Carlos"
+    },
+    {
+      id: "ASIG-02",
+      nombre: "Bases de Datos",
+      creditos: 4,
+      profesor: "Lucía"
+    }
+  ]
 };
 
 console.log(generarReporte(matriculaPrueba));
